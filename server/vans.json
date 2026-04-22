@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Modest Explorer",
+    "type": "Simple",
+    "description": "The Modest Explorer is a van designed to get you out of the house and into nature. This beauty is equipped with solar panels, a composting toilet, a water tank and kitchenette. The idea is that you can pack up your home and escape for a weekend or even longer!",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869708/van1_fy6hpy.svg",
+    "price": 60
+  },
+
+  {
+    "id": 2,
+    "name": "Beach Bum",
+    "type": "Rugged",
+    "description": "Built for the endless summer. This high-roof layout features integrated surfboard racks and a waterproof interior, making it the ultimate basecamp for those who live by the tide.",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869707/van2_ja3875.svg",
+    "price": 80
+  },
+
+  {
+    "id": 3,
+    "name": "Reliable Red",
+    "type": "Luxury",
+    "description": "A heavy-duty classic with a bulletproof diesel engine. No flashy tech here—just pure mechanical reliability and enough torque to pull a house. If you need to get there every single time, this is the one.",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869702/van3_cv2gnv.svg",
+    "price": 100
+  },
+
+  {
+    "id": 4,
+    "name": "Dreamfinder",
+    "type": "Simple",
+    "description":"The mobile command center for the modern explorer. Equipped with a built-in Starlink mount, lithium-ion battery array, and a minimalist workspace designed for deep-focus coding under the stars.",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869693/van4_ach2l9.svg",
+    "price": 65
+  },
+
+  {
+    "id": 5,
+    "name": "The Cruiser",
+    "type": "Luxury",
+    "description": "A sleek, long-wheelbase grand tourer. Tuned for maximum comfort and fuel efficiency on cross-continent journeys. It’s less of a vehicle and more of a private lounge on wheels.",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869711/van5_et2j61.svg",
+    "price": 120
+  },
+
+  {
+    "id": 6,
+    "name": "Green Wonder",
+    "type": "Rugged",
+    "description": "The invisible camper. Featuring a stealth-black solar roof and reclaimed timber interior, this van is designed to blend into the forest while providing a zero-emissions living experience.",
+    "imageUrl": "https://res.cloudinary.com/dkbuuftpy/image/upload/v1776869688/van6_y6tnvf.svg",
+    "price": 70
+  }
+
+]

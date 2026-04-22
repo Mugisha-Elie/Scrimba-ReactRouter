@@ -3,10 +3,13 @@ import Footer from "./Components/VanLife/Footer"
 import Home from "./Components/VanLife/Home"
 import About from "./Components/VanLife/About"
 import Vans from "./Components/VanLife/Vans"
+import BlogPost from "./Components/Store/BlogPost"
 
 import { BrowserRouter, Routes, Route} from "react-router-dom"
 
 export default function App(){
+
+  
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col justify-between ">
@@ -15,6 +18,7 @@ export default function App(){
           <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />}/>
           <Route path="/vans" element={<Vans />}/>
+          <Route path="/blog/:slug" element={<BlogPost/>}/>
         </Routes>
         <Footer />
       </div>
