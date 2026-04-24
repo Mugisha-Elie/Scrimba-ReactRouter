@@ -1,27 +1,61 @@
-import Header from "./Components/VanLife/Header"
-import Footer from "./Components/VanLife/Footer"
 import Home from "./Components/VanLife/Home"
 import About from "./Components/VanLife/About"
-import Vans from "./Components/VanLife/Vans"
+import VanPage from "./Components/VanLife/VanPage"
+import VanDetails from "./Components/VanLife/VanDetails"
 import BlogPost from "./Components/Store/BlogPost"
+import Layout from "./Components/Layout"
 
 import { BrowserRouter, Routes, Route} from "react-router-dom"
 
+import { useState, useEffect } from "react"
+import type{ VanShape } from "./types/VanType"
+import Vans from "./Components/VanLife/Vans"
+
 export default function App(){
 
+  const [vans, setVans] = useState<VanShape[]>([]);
   
+  useEffect(() => {
+      const controller = new AbortController()
+      async function fetchVans(){
+          try{
+              const response = await fetch("http://localhost:3000/api/vans", {
+                  signal: controller.signal
+              });
+
+              if(!response.ok){
+                  throw new Error(`An HTTP Error Occurred ${response.status} ${response.statusText}`)
+              }
+              setVans(await response.json())
+
+          }catch(error){
+              if(error instanceof Error && error.name === "AbortError"){
+                  console.log("Fetch Aborted", error);
+              }else{
+                  console.log("A network error occurred", error);
+              }
+          }
+      }
+
+      fetchVans();
+
+      return () => controller.abort()
+  }, [])
+  
+
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col justify-between ">
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/about" element={<About />}/>
-          <Route path="/vans" element={<Vans />}/>
-          <Route path="/blog/:slug" element={<BlogPost/>}/>
+          <Route path="/" element={<Layout />}>
+              <Route index element={<Home />}/>
+              <Route path="/about" element={<About />}/>
+              <Route path="/vans" element={<VanPage />}>
+                  <Route index element={<Vans vans={vans}/>}/>
+                  <Route path=":id" element={<VanDetails vans={vans}/>}/>
+              </Route>
+              <Route path="/blog/:slug" element={<BlogPost/>}/>
+          </Route>
         </Routes>
-        <Footer />
-      </div>
     </BrowserRouter>
   )
 }
