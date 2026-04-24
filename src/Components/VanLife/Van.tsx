@@ -1,10 +1,11 @@
-import type{Van} from "./Vans.tsx"
+import type{ VanShape } from "../../types/VanType"
 
 interface VanProp{
-    van: Van
+    van: VanShape
 }
 
 export default function Van({van}: VanProp){
+
     const colors: {[key: string]: string} = {
         "Simple": "bg-[#E17654] text-[#FFEAD0]",
         "Luxury": "bg-[#161616] text-[#FFEAD0]",

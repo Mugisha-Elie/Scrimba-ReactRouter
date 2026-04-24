@@ -1,45 +1,25 @@
-import { useEffect, useState } from "react"
-import Van from "./Van";
 import { Link } from "react-router-dom";
+import type {VansProps } from "../../types/VanType";
+import Van from "./Van";
 
-export interface Van{
-    id: number;
-    name: string;
-    type: string;
-    description: string;
-    imageUrl: string;
-    price: number
-}
+import { useSearchParams } from "react-router-dom";
 
-export default function Vans(){
-    const [vans, setVans] = useState<Van[]>([]);
 
-    useEffect(() => {
-        const controller = new AbortController()
-        async function fetchVans(){
-            try{
-                const response = await fetch("http://localhost:3000/api/vans", {
-                    signal: controller.signal
-                });
 
-                if(!response.ok){
-                    throw new Error(`An HTTP Error Occurred ${response.status} ${response.statusText}`)
-                }
-                setVans(await response.json())
+export default function Vans({vans}: VansProps){
+    const [searchParams, setSearchParams] = useSearchParams()
+    const filterTerm = searchParams.get("filter") || ""
 
-            }catch(error){
-                if(error instanceof Error && error.name === "AbortError"){
-                    console.log("Fetch Aborted", error);
-                }else{
-                    console.log("A network error occurred", error);
-                }
-            }
+    const filtered = vans.filter(van => van.type.toLowerCase().includes(filterTerm.toLowerCase()))
+
+    function handleFilter(e: React.MouseEvent<HTMLButtonElement>){
+        const value = e.currentTarget.value;
+        if(["simple", "luxury", "rugged"].includes(value)){
+            setSearchParams({filter: value})
+        }else{
+            setSearchParams({})
         }
-
-        fetchVans();
-
-        return () => controller.abort()
-    })
+    }
     return (
         <div
         className="min-h-full flex flex-col items-center gap-5"
@@ -48,24 +28,39 @@ export default function Vans(){
             className="text-3xl font-semibold"
             >Explore our Van options</h1>
 
-            <div className="flex justify-between items-center gap-2">
-                <div
-                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded-lg"
-                >Simple</div>
+            <div className="flex justify-between items-center gap-5">
+                <button
+                onClick={handleFilter}
+                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded"
+                value="simple"
+                >Simple</button>
 
-                <div
-                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded-lg"
-                >Luxury</div>
+                <button
+                onClick={handleFilter}
+                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded"
+                value="luxury"
+                >Luxury</button>
 
-                <div
-                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded-lg"
-                >Rugged</div>
-                <p></p>
+                <button
+                onClick={handleFilter}
+                className=" px-2 py-1 bg-[#FFEAD0] text-[#4D4D4D] font-semibold cursor-pointer rounded"
+                value="rugged"
+                >Rugged</button>
+
+                <button 
+                onClick={handleFilter}
+                value="clear"
+                className="decoration-2 underline underline-offset-2 decoration-gray-700 text-gray-700 text-lg cursor-pointer"
+                >Clear Filters</button>
             </div>
             <div className="grid grid-cols-3 place-items-center gap-3 p-5">
-                {vans.map(van => (
-                    <Link to={`/vans/${van.id}`}>
-                        <Van key={van.id} van={van}/>
+                {filtered.map(van => (
+                    <Link 
+                    key={van.id} 
+                    to={`${van.id}`}
+                    state={{vanName: van.name, from: "/vans" }}
+                    >
+                        <Van van={van}/>
                     </Link>
                 ))}
             </div>
